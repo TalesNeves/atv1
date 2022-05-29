@@ -19,6 +19,7 @@ void NMI_Handler(void) __attribute__((weak,alias("Default_Handler")));
 void HardFault_Handler(void)__attribute__((weak,alias("Default_Handler")));
 
 int main(void);
+void __libc_init_array(void);
 
 uint32_t vectors[] __attribute__((section(".isr_vector")))= {
     STACK_START,
@@ -29,10 +30,6 @@ uint32_t vectors[] __attribute__((section(".isr_vector")))= {
 
 void Default_Handler(void){
     while(1);
-}
-void NMI_Handler(void)
-{
-
 }
 
 void Reset_Handler(void){
@@ -48,6 +45,6 @@ void Reset_Handler(void){
     {
         *pDst++ = 0;
     }
-    __libc__init_array();
+    __libc_init_array();
     main();
 }

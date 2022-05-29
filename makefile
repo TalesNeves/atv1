@@ -28,7 +28,7 @@ executavel: demo_01.o startup.o
 
 
 startup.o:
-	$(CC) $(CC_FLAGS) startup.S -o startup.o
+	$(CC) $(CC_FLAGS) startup.c -o startup.o
 
 demo_01.o:
 	$(CC) $(CC_FLAGS) demo_01.c -o demo_01.o
