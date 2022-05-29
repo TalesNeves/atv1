@@ -1,0 +1,41 @@
+PROJ_NAME = atv1
+FILE_NAME =$()
+C_SOURCE=$()
+
+H_SOURCE =$()
+
+OBJ =$()
+
+
+CC=arm-none-eabi-gcc
+
+CC_FLAGS = -mcpu=cortex-m4		\
+	 	   -mthumb        		\
+		   -specs=nano.specs	\
+		   -specs=nosys.specs	\
+		   -mfpu=fpv4-sp-d16 	\
+		   -mfloat-abi=hard		\
+		   -fmessage-length=0	\
+		   -ffunction-sections	\
+		   -c					\
+
+CC_LINKER_FLAGS =arm-none-eabi-gcc	\
+				-mcpu=cortex-m4		\
+				-mthumb				\
+				-specs=nano.specs	\
+				-specs=nosys.specs	\
+				-mfpu=fpv4-sp-d16	\
+				-mfloat-abi=hard	\
+				-Wl,--gc-sections	\
+				-T"linker.ld"		\
+				-Wl,-Map=memmap.map	\
+
+
+RM = rm -rf
+
+all: objFolder $(PROJ_NAME)
+
+$(PROJ_NAME): $(OBJ)
+	$(CC) $(CC_FLAGS) $(FILE_NAME).c -o $(FILE_NAME).o 
+	$(CC) $(CC_FLAGS) startup.S -o startup.objFolder
+	$(CC) $(CC_FLAGS) demo_01.o startup.o -o demo_01.elf
