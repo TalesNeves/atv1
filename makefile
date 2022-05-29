@@ -1,11 +1,3 @@
-PROJ_NAME = atv1
-FILE_NAME =$()
-C_SOURCE=$()
-
-H_SOURCE =$()
-
-OBJ =$()
-
 
 CC=arm-none-eabi-gcc
 
@@ -19,8 +11,7 @@ CC_FLAGS = -mcpu=cortex-m4		\
 		   -ffunction-sections	\
 		   -c					\
 
-CC_LINKER_FLAGS =arm-none-eabi-gcc	\
-				-mcpu=cortex-m4		\
+CC_LINKER_FLAGS =-mcpu=cortex-m4		\
 				-mthumb				\
 				-specs=nano.specs	\
 				-specs=nosys.specs	\
@@ -31,11 +22,13 @@ CC_LINKER_FLAGS =arm-none-eabi-gcc	\
 				-Wl,-Map=memmap.map	\
 
 
-RM = rm -rf
+all: executavel
+executavel: demo_01.o startup.o
+	$(CC) $(CC_LINKER_FLAGS) demo_01.o startup.o -o demo_01.elf
 
-all: objFolder $(PROJ_NAME)
 
-$(PROJ_NAME): $(OBJ)
-	$(CC) $(CC_FLAGS) $(FILE_NAME).c -o $(FILE_NAME).o 
-	$(CC) $(CC_FLAGS) startup.S -o startup.objFolder
-	$(CC) $(CC_FLAGS) demo_01.o startup.o -o demo_01.elf
+startup.o:
+	$(CC) $(CC_FLAGS) startup.S -o startup.o
+
+demo_01.o:
+	$(CC) $(CC_FLAGS) demo_01.c -o demo_01.o
